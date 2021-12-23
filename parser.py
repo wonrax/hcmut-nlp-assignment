@@ -68,7 +68,7 @@ class Dependency:
     E.g. subj(đến, tàu_hoả) == đến -subj-> tàu_hoả
     """
     
-    def __init__(self, relation, head, dependent):
+    def __init__(self, relation: str, head: str, dependent: str):
         self.relation = relation    # e.g. subj
         self.head = head            # e.g. đến
         self.dependent = dependent  # e.g. tàu_hoả
@@ -77,8 +77,13 @@ class Dependency:
         return f"\"{self.head}\" --{self.relation}-> \"{self.dependent}\""
 
 
-def malt_parse(tokens):
-    buffer = tokens
+def malt_parse(tokens: "list[str]"):
+    """
+    Parse a sentence using MaltParser.
+    Return a list of Dependency objects.
+    """
+
+    buffer = tokens.copy()
     stack = [ROOT]
     dependencies = []
 
