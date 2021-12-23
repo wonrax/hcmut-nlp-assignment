@@ -1,4 +1,11 @@
-query = "Tàu_hoả nào đến thành_phố Huế lúc 19:00HR ?"
+from unicodedata import normalize
+import re
+
+# from utils.normalize_unicode import convert_unicode as normalize
+query = "Tàu hoả nào đến Đà Nẵng lúc 19:00HR ?"
+query = "Tàu hỏa nào đến thành phố Hồ Chí Minh ? "
+
+query = normalize("NFC", query)
 
 N = "NOUN"
 V = "VERB"
@@ -10,14 +17,26 @@ PUNC = "PUNC"  # e.g. ?, .
 
 ROOT = "ROOT"
 
+TOKENIZE_DICT = {
+    "tàu hoả": "tàu_hoả",
+    "tàu hỏa": "tàu_hoả",
+    "thành phố": "thành_phố",
+    "đà nẵng": "đà_nẵng",
+    "tp. hồ chí minh": "tp_hồ_chí_minh",
+    "hồ chí minh": "hồ_chí_minh",
+    "nha trang": "nha_trang",
+    "hà nội": "hà_nội",
+}
+
 POS = {
     "tàu_hoả": N,
     "đến": V,
     "nào": QUERY,
     "thành_phố": N,
     "huế": NAME,
+    "đà_nẵng": NAME,
+    "hồ_chí_minh": NAME,
     "lúc": PP,
-    "19:00hr": TIME,
     "?": PUNC,
     ROOT: ROOT,
 }
@@ -55,11 +74,11 @@ class Dependency:
         self.dependent = dependent  # e.g. tàu_hoả
     
     def __str__(self) -> str:
-        return f"{self.dependent} -{self.relation}-> {self.head}"
+        return f"\"{self.head}\" --{self.relation}-> \"{self.dependent}\""
 
 
-def malt_parse(string):
-    buffer = query.lower().split(" ")
+def malt_parse(tokens):
+    buffer = tokens
     stack = [ROOT]
     dependencies = []
 
@@ -72,31 +91,52 @@ def malt_parse(string):
 
         last_stack_item_type = POS[last_stack_item]
         next_buffer_item_type = POS[next_buffer_item]
-
-        # dep = ""
+        
+        dep = None
 
         if next_buffer_item_type in RIGHT_ARC[last_stack_item_type]:
-            # dep = f"{RIGHT_ARC[last_stack_item_type][next_buffer_item_type]}({last_stack_item}, {next_buffer_item})"
             dep = Dependency(RIGHT_ARC[last_stack_item_type][next_buffer_item_type], last_stack_item, next_buffer_item)
-            dependencies.append(dep)
             stack.append(buffer.pop(0))
 
         elif next_buffer_item_type in LEFT_ARC[last_stack_item_type]:
-            # dep = f"{LEFT_ARC[last_stack_item_type][next_buffer_item_type]}({next_buffer_item}, {last_stack_item})"
             dep = Dependency(LEFT_ARC[last_stack_item_type][next_buffer_item_type], next_buffer_item, last_stack_item)
-            dependencies.append(dep)
             stack.pop()
 
+        # SHIFT
         elif last_stack_item_type in [V, ROOT]:
-            # SHIFT
             stack.append(buffer.pop(0))
-        else:
-            # REDUCE
-            stack.pop()
 
-        # print("dep", dep)
+        # REDUCE
+        else:
+            stack.pop()
+        
+        if dep:
+            dependencies.append(dep)
 
     return dependencies
 
+def preprocess(text: str):
 
-[print(x) for x in malt_parse(query)]
+    text = text.lower()
+
+    for token in TOKENIZE_DICT:
+        text = text.replace(token, TOKENIZE_DICT[token])
+    
+    time_tokens = re.findall(r"\d\d:\d\dhr", text)
+    for token in time_tokens:
+        if token in POS:
+            continue
+        POS[token] = TIME
+
+    tokens = text.split(" ")
+
+    for token in tokens:
+        if token not in POS:
+            tokens.remove(token)
+    
+    return tokens
+
+tokens = preprocess(query)
+print(tokens)
+
+[print(x) for x in malt_parse(tokens)]
