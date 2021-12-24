@@ -4,6 +4,7 @@ import re
 # from utils.normalize_unicode import convert_unicode as normalize
 query = "Tàu hoả nào đến Đà Nẵng lúc 19:00HR ?"
 query = "Tàu hỏa nào đến thành phố Hồ Chí Minh ? "
+query = "Tàu hỏa nào đến thành phố Đà Nẵng ? "
 
 query = normalize("NFC", query)
 
@@ -27,6 +28,9 @@ TOKENIZE_DICT = {
     "nha trang": "nha_trang",
     "hà nội": "hà_nội",
 }
+"""
+Maps compound words to a single token.
+"""
 
 POS = {
     "tàu_hoả": N,
@@ -40,6 +44,9 @@ POS = {
     "?": PUNC,
     ROOT: ROOT,
 }
+"""
+Part-of-Speech tagging dictionary.
+"""
 
 RIGHT_ARC = {
     N: {QUERY: "query", NAME: "nmod"},
@@ -50,6 +57,10 @@ RIGHT_ARC = {
     NAME: [],
     ROOT: {V: "root"},
 }
+"""
+Dictionary for RIGHT_ARC. Key is the buffer item type and value is the
+compatible stack item type that we can draw a right-arc to.
+"""
 
 LEFT_ARC = {
     N: {V: "subj"},
@@ -60,6 +71,10 @@ LEFT_ARC = {
     NAME: [],
     ROOT: [],
 }
+"""
+Dictionary for LEFT_ARC. Key is the buffer item type and value is the
+compatible stack item type that we can draw a left-arc from.
+"""
 
 
 class Dependency:
@@ -77,7 +92,7 @@ class Dependency:
         return f"\"{self.head}\" --{self.relation}-> \"{self.dependent}\""
 
 
-def malt_parse(tokens: "list[str]"):
+def malt_parse(tokens: "list[str]") -> "list[Dependency]":
     """
     Parse a sentence using MaltParser.
     Return a list of Dependency objects.
@@ -99,28 +114,48 @@ def malt_parse(tokens: "list[str]"):
         
         dep = None
 
+
+        # RIGHT_ARC
         if next_buffer_item_type in RIGHT_ARC[last_stack_item_type]:
-            dep = Dependency(RIGHT_ARC[last_stack_item_type][next_buffer_item_type], last_stack_item, next_buffer_item)
+
+            dep = Dependency(
+                RIGHT_ARC[last_stack_item_type][next_buffer_item_type],
+                last_stack_item,
+                next_buffer_item)
+
             stack.append(buffer.pop(0))
 
+
+        # LEFT_ARC
         elif next_buffer_item_type in LEFT_ARC[last_stack_item_type]:
-            dep = Dependency(LEFT_ARC[last_stack_item_type][next_buffer_item_type], next_buffer_item, last_stack_item)
+
+            dep = Dependency(
+                LEFT_ARC[last_stack_item_type][next_buffer_item_type],
+                next_buffer_item,
+                last_stack_item)
+
             stack.pop()
+
 
         # SHIFT
         elif last_stack_item_type in [V, ROOT]:
             stack.append(buffer.pop(0))
 
+
         # REDUCE
         else:
             stack.pop()
-        
+
+
         if dep:
             dependencies.append(dep)
 
     return dependencies
 
-def preprocess(text: str):
+def preprocess(text: str) -> "list[str]":
+    """
+    Return a list of preprocessed tokens from the given text.
+    """
 
     text = text.lower()
 
