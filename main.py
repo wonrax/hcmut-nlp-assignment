@@ -25,4 +25,4 @@ print("------\n-------Logical Form-------------")
 sem = logicalize(relations)
 
 print("------\n-------Procedural-------------")
-proceduralize(sem)
+print(proceduralize(sem))
