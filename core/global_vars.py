@@ -11,8 +11,8 @@ TOKENIZE_DICT = {
     "tàu hỏa": "tàu_hoả",
     "thành phố": "thành_phố",
     "đà nẵng": "đà_nẵng",
-    "tp. hồ chí minh": "tp_hồ_chí_minh",
-    "hồ chí minh": "hồ_chí_minh",
+    "tp. hồ chí minh": "tp_hồ_chí_minh",
+    # "hồ chí minh": "hồ_chí_minh",
     "nha trang": "nha_trang",
     "hà nội": "hà_nội",
 }
@@ -27,7 +27,7 @@ POS = {
     "thành_phố": N,
     "huế": NAME,
     "đà_nẵng": NAME,
-    "hồ_chí_minh": NAME,
+    "tp_hồ_chí_minh": NAME,
     "lúc": PP,
     "?": PUNC,
 }

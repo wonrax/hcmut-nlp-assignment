@@ -9,10 +9,18 @@ def preprocess(text: str) -> "list[str]":
     """
 
     text = normalize("NFC", text)
+    
+    # Remove redundant whitespaces
+    text = re.sub(r"\s{2,}", " ", text)
+
+    # Add space before question mark
+    text = re.sub(r"(.)\?", r"\1 ?", text)
+
     text = text.lower()
 
     for token in TOKENIZE_DICT:
-        text = text.replace(token, TOKENIZE_DICT[token])
+        # text = text.replace(token, TOKENIZE_DICT[token])
+        text = re.sub(token, TOKENIZE_DICT[token], text)
     
     time_tokens = re.findall(r"\d\d:\d\dhr", text)
     for token in time_tokens:
@@ -24,6 +32,6 @@ def preprocess(text: str) -> "list[str]":
 
     for token in tokens:
         if token not in POS:
-            tokens.remove(token)
+            tokens = list(filter(lambda x: x != token, tokens))
     
     return tokens

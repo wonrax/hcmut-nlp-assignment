@@ -5,13 +5,13 @@ class Relation:
     Grammar relation of an dependency.
     """
     
-    def __init__(self, relation: str, left: str, right: str):
-        self.relation = relation    # e.g. AGENT
+    def __init__(self, type: str, left: str, right: str):
+        self.type = type    # e.g. AGENT
         self.left = left            # e.g. s1
         self.right = right  # e.g. đến
     
     def __str__(self) -> str:
-        return f"({self.left} {self.relation} {self.right})"
+        return f"({self.left} {self.type} {self.right})"
 
 class SEM:
     """
