@@ -1,4 +1,5 @@
 from core.global_vars import *
+from core.maltparse import Dependency
 
 class Relation:
     """
@@ -18,13 +19,14 @@ class SEM:
     Semantic representation object.
     """
     
-    def __init__(self, predicate: str, variable, relations):
+    def __init__(self, predicate: str, variable, relations=None):
         self.predicate = predicate
         self.variable = variable
-        self.relations = relations
+        self.relations = relations if relations else []
     
     def __str__(self) -> str:
-        return f"({self.predicate} {self.variable} {' '.join(map(str, self.relations)) if isinstance(self.relations, list) else self.relations})"
+        return f"({self.predicate} {self.variable}" \
+                + f"{' ' + ' '.join(map(str, self.relations)) if self.relations else ''})"
 
 def create_sem(word, existing_variables):
     """
@@ -36,7 +38,7 @@ def create_sem(word, existing_variables):
     if POS[word] not in [NAME]:
         return word, None
 
-    sem = SEM(POS[word], var, word)
+    sem = SEM(POS[word], var, [word])
 
     return sem, var
 
