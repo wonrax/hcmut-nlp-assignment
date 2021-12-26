@@ -53,18 +53,40 @@ def malt_parse(tokens: "list[str]") -> "list[Dependency]":
 
     buffer = tokens.copy()
     stack = [ROOT]
-    dependencies = []
+    dependencies: "list[Dependency]" = []
+    root_verb = None
 
     while True:
         if not buffer:
             break
 
         stack_item = stack[len(stack) - 1]
-        next_buffer_item = buffer[0]
+        buffer_item = buffer[0]
 
         stack_item_type = POS[stack_item] if stack_item is not ROOT \
                                             else stack_item
-        buffer_item_type = POS[next_buffer_item]
+        buffer_item_type = POS[buffer_item]
+        
+        #TODO refactor this
+        if isinstance(buffer_item_type, tuple):
+            if root_verb is None:
+                root_verb = buffer_item
+                buffer_item_type = buffer_item_type[0]
+            elif root_verb != buffer_item:
+                buffer_item_type = buffer_item_type[1]
+            else:
+                buffer_item_type = buffer_item_type[0]
+        if isinstance(stack_item_type, tuple):
+            if root_verb == stack_item:
+                stack_item_type = stack_item_type[0]
+            else:
+                stack_item_type = stack_item_type[1]
+            # tmp = stack_item_type[1]
+            # stack_item_type = stack_item_type[0]
+            # for d in dependencies:
+            #     if d.relation == "root":
+            #         stack_item_type = tmp
+            #         break
         
         dep = None
 
@@ -75,7 +97,7 @@ def malt_parse(tokens: "list[str]") -> "list[Dependency]":
             dep = Dependency(
                 RIGHT_ARC[stack_item_type][buffer_item_type],
                 stack_item,
-                next_buffer_item)
+                buffer_item)
 
             stack.append(buffer.pop(0))
 
@@ -85,7 +107,7 @@ def malt_parse(tokens: "list[str]") -> "list[Dependency]":
 
             dep = Dependency(
                 LEFT_ARC[stack_item_type][buffer_item_type],
-                next_buffer_item,
+                buffer_item,
                 stack_item)
 
             stack.pop()

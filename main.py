@@ -26,11 +26,11 @@ relations = relationalize(context_deps)
 [print(x) for x in relations]
 
 print("\n-------------Logical Form--------------")
-# sem = logicalize(relations)
+sem = logicalize(relations)
 
 print("\n-------------Procedure--------------")
-# procedure = proceduralize(sem)
-# print(procedure)
+procedure = proceduralize(sem)
+print(procedure)
 
 print("\n-------------Execute--------------")
-# execute(procedure)
+execute(procedure)
