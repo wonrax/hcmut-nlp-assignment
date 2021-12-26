@@ -12,7 +12,8 @@ class Procedure:
 MAP_WORD_TO_DATA_VAR = {
     "tàu_hoả": "TRAIN",
     "đến": "ATIME",
-    "từ": "DTIME"
+    "từ": "DTIME",
+    "đà_nẵng": "DANANG"
 }
 
 def proceduralize(sem: SEM) -> "list[Procedure]":
@@ -40,12 +41,12 @@ def find_subj(sem):
 def find_theme(sem):
     theme = find_sem_given_predicate(sem, "THEME")
     if theme and theme.relations:
-        return theme.relations[0].relations[0]
+        return MAP_WORD_TO_DATA_VAR[theme.relations[0].relations[0]]
 
 def find_time(sem):
     theme = find_sem_given_predicate(sem, "AT-TIME")
     if theme and theme.relations:
-        return theme.relations[0]
+        return theme.relations[0].upper()
 
 def find_verb_type(sem):
     wh = find_sem_given_predicate(sem, "WH-QUERY")
