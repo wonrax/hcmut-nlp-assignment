@@ -1,4 +1,4 @@
-Tàu hỏa nào đến thành phố Hồ Chí Minh ?
+Câu hỏi: Tàu hỏa nào đến thành phố Hồ Chí Minh ?
 
 ** Dependencies **
 "tàu_hoả" --query-> "nào"

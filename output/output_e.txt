@@ -1,4 +1,4 @@
-Tàu hỏa nào chạy từ TP.Hồ Chí Minh đến Hà Nội ?
+Câu hỏi: Tàu hỏa nào chạy từ TP.Hồ Chí Minh đến Hà Nội ?
 
 ** Dependencies **
 "tàu_hoả" --query-> "nào"

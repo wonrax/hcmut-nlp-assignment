@@ -1,4 +1,4 @@
-Tàu hỏa nào đến thành phố Huế lúc 19:00HR ?
+Câu hỏi: Tàu hỏa nào đến thành phố Huế lúc 19:00HR ?
 
 ** Dependencies **
 "tàu_hoả" --query-> "nào"

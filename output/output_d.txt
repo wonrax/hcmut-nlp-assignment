@@ -1,4 +1,4 @@
-Tàu hỏa nào chạy từ Nha Trang?
+Câu hỏi: Tàu hỏa nào chạy từ Nha Trang?
 
 ** Dependencies **
 "tàu_hoả" --query-> "nào"

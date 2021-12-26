@@ -1,4 +1,4 @@
-Thời gian tàu hỏa B3 chạy từ Đà Nẵng đến TP. Hồ Chí Minh là mấy giờ?
+Câu hỏi: Thời gian tàu hỏa B3 chạy từ Đà Nẵng đến TP. Hồ Chí Minh là mấy giờ?
 
 ** Dependencies **
 "b3" --nmod-> "tàu_hoả"

@@ -1,4 +1,4 @@
-Tàu hỏa B5 có chạy từ Đà Nẵng không ?
+Câu hỏi: Tàu hỏa B5 có chạy từ Đà Nẵng không ?
 
 ** Dependencies **
 "b5" --nmod-> "tàu_hoả"
