@@ -84,7 +84,7 @@ def execute(procedure: Procedure):
                 else:
                     train_query = [x for x in TRAIN_DATA if pro.args[0] == x]
                 if not train_query:
-                    truth = "Không"
+                    truth = "Không."
                     break
 
             elif isinstance(pro, Procedure) and pro.name == "ATIME":
@@ -123,22 +123,25 @@ def execute(procedure: Procedure):
                 train_query = tmp
         
         if not train_query:
-            truth = "Không"
+            truth = "Không."
         else:
-            truth = "Có"
+            truth = "Có."
 
+    ans_string = ""
     if q_type == "TRAIN" and train_query:
-        print(" ".join(train_query))
+        ans_string += ", ".join(train_query) + "."
     elif q_type == "TRAIN":
-        print("Không tìm thấy.")
+        ans_string += "Không tìm thấy."
     if duration:
-        print(duration[0][3])
+        ans_string += str(duration[0][3])
     elif q_type == "RUN-TIME":
-        print("Không tìm thấy.")
+        ans_string += "Không tìm thấy."
     if truth:
-        print(truth)
+        ans_string += truth
     elif q_type == "YESNO":
-        print("Không xác định được.")
+        ans_string += "Không xác định được."
+    
+    return ans_string
 
 def load_data(path=None):
     """
@@ -148,7 +151,7 @@ def load_data(path=None):
     ATIME = {}
     DTIME = {}
     RUNTIME = {}
-    path = "data/database.txt"
+    path = "input/database.txt"
     with open(path, "r") as f:
         for line in f.readlines():
             line = line.strip()

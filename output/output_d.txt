@@ -1,0 +1,23 @@
+Tàu hỏa nào chạy từ Nha Trang?
+
+** Dependencies **
+"tàu_hoả" --query-> "nào"
+"chạy" --subj-> "tàu_hoả"
+"ROOT" --root-> "chạy"
+"chạy" --pp-> "từ"
+"từ" --pmod-> "nha_trang"
+"chạy" --punc-> "?"
+
+** Grammar Relations **
+(s1 QUERY tàu_hoả)
+(s1 TRAIN tàu_hoả)
+(s1 PRED chạy)
+(s1 SRC nha_trang)
+
+** Logical Form **
+(WH-QUERY  (chạy s1 (TRAIN  (WHICH  tàu_hoả)) (FROM-LOC  nha_trang)))
+
+** Procedure **
+(PRINT-ALL ?x (TRAIN ?x) (DTIME ?x NTrang ?t))
+
+Trả lời: Không tìm thấy.

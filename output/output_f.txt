@@ -1,0 +1,24 @@
+Tàu hỏa B5 có chạy từ Đà Nẵng không ?
+
+** Dependencies **
+"b5" --nmod-> "tàu_hoả"
+"chạy" --subj-> "b5"
+"ROOT" --root-> "chạy"
+"chạy" --pp-> "từ"
+"từ" --pmod-> "đà_nẵng"
+"chạy" --yesno-> "không"
+"chạy" --punc-> "?"
+
+** Grammar Relations **
+(s1 TRAIN b5)
+(s1 PRED chạy)
+(s1 SRC đà_nẵng)
+(s1 YESNO không)
+
+** Logical Form **
+(YESNO  (chạy s1 (TRAIN  b5) (FROM-LOC  đà_nẵng)))
+
+** Procedure **
+(EXISTS ?y (TRAIN B5) (DTIME B5 DANANG ?t))
+
+Trả lời: Không.

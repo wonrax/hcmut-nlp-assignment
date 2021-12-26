@@ -1,0 +1,28 @@
+Thời gian tàu hỏa B3 chạy từ Đà Nẵng đến TP. Hồ Chí Minh là mấy giờ?
+
+** Dependencies **
+"b3" --nmod-> "tàu_hoả"
+"chạy" --subj-> "b3"
+"chạy" --duration-> "thời_gian"
+"ROOT" --root-> "chạy"
+"chạy" --pp-> "từ"
+"từ" --pmod-> "đà_nẵng"
+"đến" --pmod-> "tp_hồ_chí_minh"
+"giờ" --query-> "mấy"
+"chạy" --punc-> "?"
+
+** Grammar Relations **
+(s1 TRAIN b3)
+(s1 DURATION thời_gian)
+(s1 PRED chạy)
+(s1 SRC đà_nẵng)
+(s1 DES tp_hồ_chí_minh)
+(s1 QUERY giờ)
+
+** Logical Form **
+(WH-QUERY  (chạy s1 (TRAIN  b3) (FROM-LOC  đà_nẵng) (TO-LOC  tp_hồ_chí_minh) (WHICH  (DURATION  thời_gian))))
+
+** Procedure **
+(PRINT-ALL ?rt (DURATION ?rt) (RUN-TIME B3 DANANG HCM ?rt))
+
+Trả lời: 10:00HR

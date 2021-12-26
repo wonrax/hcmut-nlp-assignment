@@ -1,0 +1,23 @@
+Tàu hỏa nào chạy từ TP.Hồ Chí Minh đến Hà Nội ?
+
+** Dependencies **
+"tàu_hoả" --query-> "nào"
+"chạy" --subj-> "tàu_hoả"
+"ROOT" --root-> "chạy"
+"chạy" --pp-> "từ"
+"đến" --pmod-> "hà_nội"
+"chạy" --punc-> "?"
+
+** Grammar Relations **
+(s1 QUERY tàu_hoả)
+(s1 TRAIN tàu_hoả)
+(s1 PRED chạy)
+(s1 DES hà_nội)
+
+** Logical Form **
+(WH-QUERY  (chạy s1 (TRAIN  (WHICH  tàu_hoả)) (TO-LOC  hà_nội)))
+
+** Procedure **
+(PRINT-ALL ?x (TRAIN ?x) (ATIME ?x HN ?t))
+
+Trả lời: B5.

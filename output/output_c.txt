@@ -1,0 +1,23 @@
+Tàu hỏa nào đến thành phố Hồ Chí Minh ?
+
+** Dependencies **
+"tàu_hoả" --query-> "nào"
+"đến" --subj-> "tàu_hoả"
+"ROOT" --root-> "đến"
+"hồ_chí_minh" --nmod-> "thành_phố"
+"đến" --dobj-> "hồ_chí_minh"
+"đến" --punc-> "?"
+
+** Grammar Relations **
+(s1 QUERY tàu_hoả)
+(s1 TRAIN tàu_hoả)
+(s1 PRED đến)
+(s1 THEME (NAME h1 hồ_chí_minh))
+
+** Logical Form **
+(WH-QUERY  (đến s1 (TRAIN  (WHICH  tàu_hoả)) (THEME  (NAME h1 hồ_chí_minh))))
+
+** Procedure **
+(PRINT-ALL ?x (TRAIN ?x) (ATIME ?x HCM ?t))
+
+Trả lời: B3.

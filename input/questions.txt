@@ -1,0 +1,6 @@
+Tàu hỏa nào đến thành phố Huế lúc 19:00HR ?
+Thời gian tàu hỏa B3 chạy từ Đà Nẵng đến TP. Hồ Chí Minh là mấy giờ?
+Tàu hỏa nào đến thành phố Hồ Chí Minh ?
+Tàu hỏa nào chạy từ Nha Trang?
+Tàu hỏa nào chạy từ TP.Hồ Chí Minh đến Hà Nội ?
+Tàu hỏa B5 có chạy từ Đà Nẵng không ?
