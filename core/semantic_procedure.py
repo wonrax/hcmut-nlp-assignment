@@ -13,7 +13,12 @@ MAP_WORD_TO_DATA_VAR = {
     "tàu_hoả": "TRAIN",
     "đến": "ATIME",
     "từ": "DTIME",
-    "đà_nẵng": "DANANG"
+    "đà_nẵng": "DANANG",
+    "huế": "HUE",
+    "tp_hồ_chí_minh": "HCM",
+    "hồ_chí_minh": "HCM",
+    "nha_trang": "NTrang",
+    "hà_nội": "HN",
 }
 
 def proceduralize(sem: SEM) -> "list[Procedure]":

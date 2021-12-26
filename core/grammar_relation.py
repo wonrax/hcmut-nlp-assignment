@@ -74,7 +74,7 @@ def relationalize(dependencies: "list[Dependency]") -> "list[Relation]":
             relations.append(Relation("PRED", "s1", dep.dependent))
 
         elif dep.relation == "subj":
-            relations.append(Relation("AGENT", "s1", dep.dependent))
+            relations.append(Relation("TRAIN", "s1", dep.dependent))
 
         elif dep.relation == "nmod":
             # dependent_sem, dependent_var = create_sem(dep.dependent, variables)
@@ -96,6 +96,9 @@ def relationalize(dependencies: "list[Dependency]") -> "list[Relation]":
 
         elif dep.relation == "pmod" and dep.head == "đến":
             relations.append(Relation("DES", "s1", dep.dependent))
+
+        elif dep.relation == "duration":
+            relations.append(Relation("DURATION", "s1", dep.dependent))
 
     return relations
 

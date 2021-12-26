@@ -6,10 +6,11 @@ RIGHT_ARC = {
     N: {Q: "query"},
     V: {TIME: "time", PUNC: "punc", NAME: "dobj", PP: "pp"},
     Q: [],
-    PP: {NAME: "pmod", N: "pmod"},
+    PP: {NAME: "pmod"},
     TIME: [],
     NAME: [],
     ROOT: {V: "root"},
+    DURATION: [],
 }
 """
 Dictionary for RIGHT_ARC. Key is the buffer item type and value is the
@@ -18,12 +19,13 @@ compatible stack item type that we can draw a right-arc to.
 
 LEFT_ARC = {
     N: {V: "subj", NAME: "nmod"},
-    V: [],
+    V: {},
     Q: {N: "query"},
     PP: {TIME: "timemod"},
     TIME: [],
-    NAME: [],
+    NAME: {V: "subj"},
     ROOT: [],
+    DURATION: {V: "duration"},
 }
 """
 Dictionary for LEFT_ARC. Key is the buffer item type and value is the
@@ -111,14 +113,13 @@ def malt_parse(tokens: "list[str]") -> "list[Dependency]":
 
 
         # SHIFT
-        elif stack_item_type in [V, ROOT]:
+        elif stack_item_type in [V, ROOT, PP, DURATION]:
             stack.append(buffer.pop(0))
 
 
         # REDUCE
         else:
             stack.pop()
-
 
         if dep:
             dependencies.append(dep)

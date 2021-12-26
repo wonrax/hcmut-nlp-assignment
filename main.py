@@ -6,12 +6,13 @@ from core.semantic_procedure import proceduralize
 from core.execute import execute
 
 
-query = "Tàu hoả nào đến thành phố Huế lúc 19:00HR ?"
-query = "tàu hỏa nào đến thành phố hồ chí minh?"
-query = "Tàu hỏa nào đến thành phố Đà Nẵng lúc 11:30HR?"
-# query = "Tàu hỏa nào đến Đà Nẵng?"
+# query = " Tàu hỏa nào đến thành phố Huế lúc 19:00HR ?"
 # query = "Thời gian tàu hỏa B3 chạy từ thành phố Đà Nẵng đến TP. Hồ Chí Minh" \
 #         + " là mấy giờ?"
+# query = "Tàu hỏa nào đến thành phố Hồ Chí Minh ?"
+# query = "Tàu hỏa nào chạy từ Nha Trang, lúc mấy giờ"
+query = "Tàu hỏa nào chạy từ TP. Hồ Chí Minh đến Hà Nội ?"
+# query = "Tàu hỏa B5 có chạy từ Đà Nẵng không ?"
 
 tokens = preprocess(query)
 print(tokens)

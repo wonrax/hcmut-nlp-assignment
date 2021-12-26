@@ -7,6 +7,7 @@ TIME = "TIME"  # e.g. 19:00HR
 Q = "QUERY"  # e.g. nào
 NAME = "NAME"  # e.g. HUẾ
 PUNC = "PUNC"  # e.g. ?, .
+DURATION = "DURATION"  # e.g. thời gian
 
 TOKENIZE_DICT = OrderedDict({
     "tàu hoả": "tàu_hoả",
@@ -25,7 +26,7 @@ Maps compound words to a single token.
 
 POS = {
     "tàu_hoả": N,
-    "thời_gian": N,
+    "thời_gian": DURATION,
     "đến": (V, PP),
     "từ": PP,
     "chạy": V,
@@ -36,6 +37,9 @@ POS = {
     "huế": NAME,
     "đà_nẵng": NAME,
     "tp_hồ_chí_minh": NAME,
+    "hồ_chí_minh": NAME,
+    "hà_nội": NAME,
+    "nha_trang": NAME,
     "lúc": PP,
     "?": PUNC,
     "b1": NAME,
