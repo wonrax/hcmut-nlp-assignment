@@ -4,9 +4,9 @@ ROOT = "ROOT"
 
 RIGHT_ARC = {
     N: {Q: "query", NAME: "nmod"},
-    V: {N: "dobj", TIME: "time", PUNC: "punc", NAME: "dobj"},
+    V: {N: "dobj", TIME: "time", PUNC: "punc", NAME: "dobj", PP: "pp"},
     Q: [],
-    PP: [],
+    PP: {NAME: "pmod"},
     TIME: [],
     NAME: [],
     ROOT: {V: "root"},
@@ -19,7 +19,7 @@ compatible stack item type that we can draw a right-arc to.
 LEFT_ARC = {
     N: {V: "subj"},
     V: [],
-    Q: [],
+    Q: {N: "query"},
     PP: {TIME: "timemod"},
     TIME: [],
     NAME: [],
@@ -67,6 +67,9 @@ def malt_parse(tokens: "list[str]") -> "list[Dependency]":
                                             else stack_item
         buffer_item_type = POS[buffer_item]
         
+        if buffer_item_type == V and root_verb is None:
+            root_verb = buffer_item
+        
         #TODO refactor this
         if isinstance(buffer_item_type, tuple):
             if root_verb is None:
@@ -81,13 +84,7 @@ def malt_parse(tokens: "list[str]") -> "list[Dependency]":
                 stack_item_type = stack_item_type[0]
             else:
                 stack_item_type = stack_item_type[1]
-            # tmp = stack_item_type[1]
-            # stack_item_type = stack_item_type[0]
-            # for d in dependencies:
-            #     if d.relation == "root":
-            #         stack_item_type = tmp
-            #         break
-        
+
         dep = None
 
 

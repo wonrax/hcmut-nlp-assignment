@@ -9,9 +9,9 @@ from core.execute import execute
 query = "Tàu hoả nào đến thành phố Huế lúc 19:00HR ?"
 query = "tàu hỏa nào đến thành phố hồ chí minh?"
 query = "Tàu hỏa nào đến Đà Nẵng lúc 11:30HR?"
-# query = "Tàu hỏa nào đến Đà Nẵng?"
-# query = "Thời gian tàu hỏa B3 chạy từ Đà Nẵng đến TP. Hồ Chí Minh" \
-#         + " là mấy giờ?"
+query = "Tàu hỏa nào đến Đà Nẵng?"
+query = "Thời gian tàu hỏa B3 chạy từ Đà Nẵng đến TP. Hồ Chí Minh" \
+        + " là mấy giờ?"
 
 tokens = preprocess(query)
 print(tokens)
@@ -25,12 +25,12 @@ print("\n-------------Grammar Relations--------------")
 relations = relationalize(context_deps)
 [print(x) for x in relations]
 
-print("\n-------------Logical Form--------------")
-sem = logicalize(relations)
+# print("\n-------------Logical Form--------------")
+# sem = logicalize(relations)
 
-print("\n-------------Procedure--------------")
-procedure = proceduralize(sem)
-print(procedure)
+# print("\n-------------Procedure--------------")
+# procedure = proceduralize(sem)
+# print(procedure)
 
-print("\n-------------Execute--------------")
-execute(procedure)
+# print("\n-------------Execute--------------")
+# execute(procedure)
