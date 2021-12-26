@@ -23,15 +23,15 @@ MAP_WORD_TO_DATA_VAR = {
 }
 
 def proceduralize(sem: SEM) -> "list[Procedure]":
+    subj = find_subj(sem)
+    theme = find_theme(sem)
+    
+    src = find_src(sem)
+    des = find_des(sem)
+
+    procedures: "list[Procedure]" = []
+
     if sem.predicate == "WH-QUERY":
-
-        subj = find_subj(sem)
-        theme = find_theme(sem)
-        
-        src = find_src(sem)
-        des = find_des(sem)
-
-        procedures: "list[Procedure]" = []
 
         if subj == "TRAIN" and theme is not None:
             time = find_time(sem)
@@ -77,6 +77,25 @@ def proceduralize(sem: SEM) -> "list[Procedure]":
             procedures.append(rtprocedure)
 
             return Procedure("PRINT-ALL", ["?rt"] + procedures)
+
+    if sem.predicate == "YESNO":
+
+        train_id = find_train(sem)
+        if train_id:
+            train_id = train_id.upper()
+
+        if not train_id:
+            train_id = "?x"
+
+        procedures.append(Procedure("TRAIN", [train_id]))
+
+        if src:
+            procedures.append(Procedure("DTIME", [train_id, src, "?t"]))
+        if des:
+            procedures.append(Procedure("ATIME", [train_id, des, "?t"]))
+        
+        return Procedure("EXISTS", ["?y"] + procedures)
+
 
 def find_subj(sem):
     which_subj = find_sem_given_predicate(sem, "WHICH")

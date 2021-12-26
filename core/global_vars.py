@@ -8,6 +8,7 @@ Q = "QUERY"  # e.g. nào
 NAME = "NAME"  # e.g. HUẾ
 PUNC = "PUNC"  # e.g. ?, .
 DURATION = "DURATION"  # e.g. thời gian
+YN = "YESNO"
 
 TOKENIZE_DICT = OrderedDict({
     "tàu hoả": "tàu_hoả",
@@ -42,6 +43,7 @@ POS = {
     "nha_trang": NAME,
     "lúc": PP,
     "?": PUNC,
+    "không": YN,
     "b1": NAME,
     "b2": NAME,
     "b3": NAME,

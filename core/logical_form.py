@@ -57,6 +57,25 @@ def logicalize(relations: "list[Relation]") -> SEM:
 
             sem = SEM("WH-QUERY", "", [pred_sem])
 
-    print(sem)
+    if "YESNO" in mapping:
+
+        pred = mapping["PRED"]
+
+        agent = mapping["TRAIN"]
+        agent_sem = SEM("TRAIN", "", [agent.right])
+        
+        src_sem = None
+        des_sem = None
+
+        if "SRC" in mapping:
+            src_sem = SEM("FROM-LOC", "", [mapping["SRC"].right])
+        if "DES" in mapping:
+            des_sem = SEM("TO-LOC", "", [mapping["DES"].right])
+
+        pred_sem_relations = list(filter(None.__ne__,
+                                [agent_sem, src_sem, des_sem]))
+        pred_sem = SEM(pred.right, pred.left, pred_sem_relations)
+        sem = SEM("YESNO", "", [pred_sem])
+
     
     return sem

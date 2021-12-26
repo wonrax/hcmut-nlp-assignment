@@ -100,5 +100,8 @@ def relationalize(dependencies: "list[Dependency]") -> "list[Relation]":
         elif dep.relation == "duration":
             relations.append(Relation("DURATION", "s1", dep.dependent))
 
+        elif dep.relation == "yesno":
+            relations.append(Relation("YESNO", "s1", dep.dependent))
+
     return relations
 

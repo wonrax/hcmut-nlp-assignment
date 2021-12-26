@@ -4,13 +4,14 @@ ROOT = "ROOT"
 
 RIGHT_ARC = {
     N: {Q: "query"},
-    V: {TIME: "time", PUNC: "punc", NAME: "dobj", PP: "pp"},
+    V: {TIME: "time", PUNC: "punc", NAME: "dobj", PP: "pp", YN: "yesno"},
     Q: [],
     PP: {NAME: "pmod"},
     TIME: [],
     NAME: [],
     ROOT: {V: "root"},
     DURATION: [],
+    YN: [],
 }
 """
 Dictionary for RIGHT_ARC. Key is the buffer item type and value is the
@@ -26,6 +27,7 @@ LEFT_ARC = {
     NAME: {V: "subj"},
     ROOT: [],
     DURATION: {V: "duration"},
+    YN: [],
 }
 """
 Dictionary for LEFT_ARC. Key is the buffer item type and value is the
@@ -61,7 +63,7 @@ def malt_parse(tokens: "list[str]") -> "list[Dependency]":
     while True:
         if not buffer:
             break
-
+        
         stack_item = stack[len(stack) - 1]
         buffer_item = buffer[0]
 
@@ -114,8 +116,10 @@ def malt_parse(tokens: "list[str]") -> "list[Dependency]":
 
         # SHIFT
         elif stack_item_type in [V, ROOT, PP, DURATION]:
-            stack.append(buffer.pop(0))
-
+            if stack_item_type == PP and buffer_item_type in [YN, PUNC]:
+                stack.pop()
+            else:
+                stack.append(buffer.pop(0))
 
         # REDUCE
         else:
