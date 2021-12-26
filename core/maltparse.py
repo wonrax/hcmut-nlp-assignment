@@ -3,10 +3,10 @@ from core.global_vars import *
 ROOT = "ROOT"
 
 RIGHT_ARC = {
-    N: {Q: "query", NAME: "nmod"},
-    V: {N: "dobj", TIME: "time", PUNC: "punc", NAME: "dobj", PP: "pp"},
+    N: {Q: "query"},
+    V: {TIME: "time", PUNC: "punc", NAME: "dobj", PP: "pp"},
     Q: [],
-    PP: {NAME: "pmod"},
+    PP: {NAME: "pmod", N: "pmod"},
     TIME: [],
     NAME: [],
     ROOT: {V: "root"},
@@ -17,7 +17,7 @@ compatible stack item type that we can draw a right-arc to.
 """
 
 LEFT_ARC = {
-    N: {V: "subj"},
+    N: {V: "subj", NAME: "nmod"},
     V: [],
     Q: {N: "query"},
     PP: {TIME: "timemod"},
