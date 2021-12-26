@@ -1,10 +1,10 @@
-from core.preprocess import preprocess
-from core.maltparse import malt_parse
-from core.grammar_relation import relationalize
-from core.logical_form import logicalize
-from core.semantic_procedure import proceduralize
-from core.execute import execute
-from core.io import get_questions, write_to_file
+from models.preprocess import preprocess
+from models.maltparse import malt_parse
+from models.grammar_relation import relationalize
+from models.logical_form import logicalize
+from models.semantic_procedure import proceduralize
+from models.execute import execute
+from models.io import get_questions, write_to_file
 import argparse
 
 def run_query(query: str, extra_log=True):

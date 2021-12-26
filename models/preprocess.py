@@ -1,4 +1,4 @@
-from core.global_vars import *
+from models.global_vars import *
 import re
 from unicodedata import normalize
 

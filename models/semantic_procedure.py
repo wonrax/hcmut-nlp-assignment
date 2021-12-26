@@ -1,4 +1,4 @@
-from core.grammar_relation import SEM
+from models.grammar_relation import SEM
 
 class Procedure:
     def __init__(self, name:str,  args: "list[str]"):

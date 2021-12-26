@@ -1,4 +1,4 @@
-from core.semantic_procedure import Procedure
+from models.semantic_procedure import Procedure
 
 def execute(procedure: Procedure):
     """

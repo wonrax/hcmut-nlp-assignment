@@ -1,5 +1,5 @@
-from core.global_vars import *
-from core.maltparse import Dependency
+from models.global_vars import *
+from models.maltparse import Dependency
 
 class Relation:
     """

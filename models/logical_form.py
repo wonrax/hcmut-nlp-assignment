@@ -1,4 +1,4 @@
-from core.grammar_relation import Relation, SEM
+from models.grammar_relation import Relation, SEM
 
 def logicalize(relations: "list[Relation]") -> SEM:
     """

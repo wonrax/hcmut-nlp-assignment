@@ -1,4 +1,4 @@
-from core.global_vars import *
+from models.global_vars import *
 
 ROOT = "ROOT"
 
