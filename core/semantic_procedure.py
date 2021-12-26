@@ -1,7 +1,13 @@
 from core.grammar_relation import SEM
 
 class Procedure:
-    pass
+    def __init__(self, name:str,  args: "list[str]"):
+        self.name = name
+        self.args = args
+    
+    def __str__(self):
+        return f"({self.name} " \
+            + f"{' '.join(map(str, self.args)) if isinstance(self.args, list) else self.args})"
 
 MAP_WORD_TO_DATA_VAR = {
     "tàu_hoả": "TRAIN",
@@ -18,10 +24,13 @@ def proceduralize(sem: SEM) -> "list[Procedure]":
         verb_type = find_verb_type(sem)
         
         # (ATIME ?t HUE 19:00HR)
+        procedures: "list[Procedure]" = []
 
-        q_type = f"PRINT-ALL ?x ({subj} ?x) ({verb_type} ?t {theme} {time})"
-        
-        return q_type
+        if subj:
+            procedures.append(Procedure(subj, ["?x"]))
+        if theme:
+            procedures.append(Procedure(verb_type, ["?x", theme, time]))
+        return Procedure("PRINT-ALL", ["?x"] + procedures)
 
 def find_subj(sem):
     which_subj = find_sem_given_predicate(sem, "WHICH")
@@ -41,7 +50,7 @@ def find_time(sem):
 def find_verb_type(sem):
     wh = find_sem_given_predicate(sem, "WH-QUERY")
     if wh and wh.relations:
-        return wh.relations[0].predicate
+        return MAP_WORD_TO_DATA_VAR[wh.relations[0].predicate]
 
 
 def find_sem_given_predicate(sem: SEM, predicate: str) -> SEM:
