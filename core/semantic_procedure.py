@@ -22,6 +22,8 @@ def proceduralize(sem: SEM) -> "list[Procedure]":
         subj = find_subj(sem)
         theme = find_theme(sem)
         time = find_time(sem)
+        if not time:
+            time = "?t"
         verb_type = find_verb_type(sem)
         
         # (ATIME ?t HUE 19:00HR)

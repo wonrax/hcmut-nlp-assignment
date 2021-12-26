@@ -13,12 +13,15 @@ def logicalize(relations: "list[Relation]") -> SEM:
 
     if "QUERY" in mapping:
         pred = mapping["PRED"]
-        agent = mapping["AGENT"]
+
         theme = mapping["THEME"]
-        time = mapping["AT-TIME"]
-        agent_sem = SEM("AGENT","", [SEM("WHICH", "", [agent.right])])
         theme_sem = SEM("THEME", "", [theme.right])
-        time_sem = SEM("AT-TIME", "", [time.right])
+
+        agent = mapping["AGENT"]
+        agent_sem = SEM("AGENT","", [SEM("WHICH", "", [agent.right])])
+
+        time = mapping["AT-TIME"] if "AT-TIME" in mapping else None
+        time_sem = SEM("AT-TIME", "", [time.right]) if time else None
 
         pred_sem_relations = list(filter(None.__ne__,
                                 [agent_sem, theme_sem, time_sem]))

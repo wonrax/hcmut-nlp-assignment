@@ -19,16 +19,16 @@ def execute(procedure: Procedure):
                 for train in train_query:
                     atimes_query[train] = ATIME_DATA[train]
 
+                queries = []
+                if "?" not in args[1]:
+                    queries.append(args[1])
+                if "?" not in args[2]:
+                    queries.append(args[2])
                 train_query = []
                 for train in atimes_query:
-                    queries = []
-                    if "?" not in args[1]:
-                        queries.append(args[1])
-                    if "?" not in args[2]:
-                        queries.append(args[2])
                     if(all(x in atimes_query[train] for x in queries)):
                         train_query.append(train)
-        print(train)
+        print(train_query)
 
 def load_data(path=None):
     """
