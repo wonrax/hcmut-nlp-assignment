@@ -15,10 +15,11 @@ MAP_WORD_TO_DATA_VAR = {
     "từ": "DTIME",
     "đà_nẵng": "DANANG",
     "huế": "HUE",
-    "tp_hồ_chí_minh": "HCM",
+    "tp_hồ_chí_minh": "HCM",
     "hồ_chí_minh": "HCM",
     "nha_trang": "NTrang",
     "hà_nội": "HN",
+    "thời_gian": "DURATION",
 }
 
 def proceduralize(sem: SEM) -> "list[Procedure]":
@@ -26,23 +27,62 @@ def proceduralize(sem: SEM) -> "list[Procedure]":
 
         subj = find_subj(sem)
         theme = find_theme(sem)
-        time = find_time(sem)
-        if not time:
-            time = "?t"
-        verb_type = find_verb_type(sem)
         
-        # (ATIME ?t HUE 19:00HR)
+        src = find_src(sem)
+        des = find_des(sem)
+
         procedures: "list[Procedure]" = []
 
-        if subj:
+        if subj == "TRAIN" and theme is not None:
+            theme = find_theme(sem)
+            time = find_time(sem)
+            if not time:
+                time = "?t"
+            verb_type = find_verb_type(sem)
+            
+
+            if subj:
+                procedures.append(Procedure(subj, ["?x"]))
+            if theme:
+                procedures.append(Procedure(verb_type, ["?x", theme, time]))
+            return Procedure("PRINT-ALL", ["?x"] + procedures)
+        
+        if subj == "TRAIN":
+
             procedures.append(Procedure(subj, ["?x"]))
-        if theme:
-            procedures.append(Procedure(verb_type, ["?x", theme, time]))
-        return Procedure("PRINT-ALL", ["?x"] + procedures)
+            if src:
+                procedures.append(Procedure("DTIME", ["?x", src, "?t"]))
+            if des:
+                procedures.append(Procedure("ATIME", ["?x", des, "?t"]))
+            return Procedure("PRINT-ALL", ["?x"] + procedures)
+
+        if subj == "DURATION":
+            procedures.append(Procedure("DURATION", ["?rt"]))
+            
+        
+            rtprocedure = Procedure("RUN-TIME", [])
+
+            train_id = find_train(sem)
+            if train_id:
+                rtprocedure.args.append(train_id.upper())
+            else:
+                rtprocedure.args.append("?x")
+
+            if src:
+                rtprocedure.args.append(src)
+            if des:
+                rtprocedure.args.append(des)
+            rtprocedure.args.append("?rt")
+            
+            procedures.append(rtprocedure)
+
+            return Procedure("PRINT-ALL", ["?rt"] + procedures)
 
 def find_subj(sem):
     which_subj = find_sem_given_predicate(sem, "WHICH")
     if which_subj and which_subj.relations:
+        if isinstance(which_subj.relations[0], SEM):
+            return MAP_WORD_TO_DATA_VAR[which_subj.relations[0].relations[0]]
         return MAP_WORD_TO_DATA_VAR[which_subj.relations[0]]
 
 def find_theme(sem):
@@ -60,6 +100,20 @@ def find_verb_type(sem):
     if wh and wh.relations:
         return MAP_WORD_TO_DATA_VAR[wh.relations[0].predicate]
 
+def find_src(sem):
+    src = find_sem_given_predicate(sem, "FROM-LOC")
+    if src and src.relations:
+        return MAP_WORD_TO_DATA_VAR[src.relations[0]]
+
+def find_des(sem):
+    src = find_sem_given_predicate(sem, "TO-LOC")
+    if src and src.relations:
+        return MAP_WORD_TO_DATA_VAR[src.relations[0]]
+
+def find_train(sem):
+    train = find_sem_given_predicate(sem, "TRAIN")
+    if train and train.relations:
+        return train.relations[0]
 
 def find_sem_given_predicate(sem: SEM, predicate: str) -> SEM:
     if sem.predicate == predicate:
