@@ -34,7 +34,6 @@ def proceduralize(sem: SEM) -> "list[Procedure]":
         procedures: "list[Procedure]" = []
 
         if subj == "TRAIN" and theme is not None:
-            theme = find_theme(sem)
             time = find_time(sem)
             if not time:
                 time = "?t"
@@ -54,6 +53,7 @@ def proceduralize(sem: SEM) -> "list[Procedure]":
                 procedures.append(Procedure("DTIME", ["?x", src, "?t"]))
             if des:
                 procedures.append(Procedure("ATIME", ["?x", des, "?t"]))
+
             return Procedure("PRINT-ALL", ["?x"] + procedures)
 
         if subj == "DURATION":

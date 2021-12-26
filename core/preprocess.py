@@ -22,7 +22,7 @@ def preprocess(text: str) -> "list[str]":
         # text = text.replace(token, TOKENIZE_DICT[token])
         text = re.sub(token, TOKENIZE_DICT[token], text)
     
-    time_tokens = re.findall(r"\d\d:\d\dhr", text)
+    time_tokens = re.findall(r"\d+:\d+hr", text)
     for token in time_tokens:
         if token in POS:
             continue

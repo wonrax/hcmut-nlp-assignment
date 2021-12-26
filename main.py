@@ -10,8 +10,8 @@ queries = []
 queries.append("Tàu hỏa nào đến thành phố Huế lúc 19:00HR ?")
 queries.append("Thời gian tàu hỏa B3 chạy từ thành phố Đà Nẵng đến TP. Hồ Chí Minh là mấy giờ?")
 queries.append("Tàu hỏa nào đến thành phố Hồ Chí Minh ?")
-queries.append("Tàu hỏa nào chạy từ Nha Trang?")
 # queries.append("Tàu hỏa nào chạy từ Nha Trang, lúc mấy giờ?")
+queries.append("Tàu hỏa nào chạy từ Nha Trang?")
 queries.append("Tàu hỏa nào chạy từ TP. Hồ Chí Minh đến Hà Nội ?")
 queries.append("Tàu hỏa B5 có chạy từ Đà Nẵng không ?")
 
