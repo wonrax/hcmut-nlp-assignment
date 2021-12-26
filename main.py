@@ -52,7 +52,10 @@ def main():
     args = parser.parse_args()
 
     if args.sentence:
-        print(run_query(args.sentence, args.verbosity), end="")
+        try:
+            print(run_query(args.sentence, args.verbosity), end="")
+        except:
+            print("Không thể trả lời câu hỏi này. Vui lòng thử câu khác.")
         return
 
     queries = get_questions("input/questions.txt")
